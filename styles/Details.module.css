@@ -1,0 +1,26 @@
+.average{
+    width: 65px;
+    height: 65px;
+  margin-top: -20px;
+  z-index: 20;
+  transform: rotate(23deg);
+  padding-top: 15px;
+  text-align: center;
+  }
+  .notRotate{
+    transform: rotate(-23deg);
+  }
+    .heighAverage{
+  
+      border: 5px solid #21D07A;
+      border-left-color: gray;
+    }
+    .lowAverage{
+      border: 5px solid #C8CB2E;
+      border-left-color:gray;
+    }
+    .favourt{
+        width: 65px;
+    height: 65px;
+    margin-top: -20px;
+    }

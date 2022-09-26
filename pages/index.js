@@ -1,8 +1,19 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
+import Image from "next/image";
+import Link from "next/link";
+export default function Home({ data }) {
+  //console.log(data.results);
+  const radius = (rate) => {
+    let result = rate > 70 ? styles.heighAverage : styles.lowAverage;
+    return result;
+  };
 
-export default function Home() {
+  const myLoader = ({ src, width, quality }) => {
+    return `https://www.themoviedb.org/t/p/w220_and_h330_face/${src}?w=${width}&q=${
+      quality || 75
+    }`;
+  };
   return (
     <div className={styles.container}>
       <Head>
@@ -12,58 +23,70 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+        <div className="container">
+          <h1 className={`${styles.title}`}>Movies</h1>
+          <div className="d-flex justify-content-between row">
+            {data.results.map((item) => {
+              return (
+                <div className=" col-sm-12  col-md-3" key={item.id}>
+                  <div className="position-relative rounded shadow  d-flex justify-content-between flex-column my-4  mx-2">
+                    <div
+                      className={`${styles.link} d-flex justify-content-center align-items-center bg-light  rounded-circle`}
+                    >
+                      <Link
+                        href={{
+                          pathname: `/movie/[id]`,
+                          query: {
+                            id: item.id,
+                          },
+                        }}
+                      >
+                        <a className="d-block fw-bold fs-3">
+                          <p>...</p>
+                        </a>
+                      </Link>
+                    </div>
+                    <Image
+                      loader={myLoader}
+                      src={item.poster_path}
+                      alt="Picture of the Movie Poster"
+                      width={500}
+                      height={500}
+                    />
+                    <div
+                      className={`${styles.average} ${radius(
+                        item.vote_average * 10
+                      )}  mx-3 rounded-circle bg-dark  d-flex justify-content-center align-items-center text-light fw-bold`}
+                    >
+                      <p className={`${styles.notRotate}`}>
+                        {item.vote_average * 10} <sup>*</sup>
+                      </p>
+                    </div>
+                    <h4 className="px-3 pt-3 " style={{ height: "90px" }}>
+                      {item.title}
+                    </h4>
+                    <p className="px-3 text-gray-500">{item.release_date}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+      <footer className={styles.footer}></footer>
     </div>
-  )
+  );
+}
+
+// This gets called on every request
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const res = await fetch(`
+  https://api.themoviedb.org/3/movie/popular?api_key=931fa26364246e318b07fbc8f8a75ead`);
+
+  const data = await res.json();
+
+  // Pass data to the page via props
+  return { props: { data } };
 }

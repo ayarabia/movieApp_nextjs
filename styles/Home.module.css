@@ -1,6 +1,3 @@
-.container {
-  padding: 0 2rem;
-}
 
 .main {
   min-height: 100vh;
@@ -114,3 +111,31 @@
     flex-direction: column;
   }
 }
+.average{
+  width: 50px;
+  height: 50px;
+margin-top: -20px;
+z-index: 20;
+transform: rotate(23deg);
+padding-top: 15px;
+}
+.notRotate{
+  transform: rotate(-23deg);
+}
+  .heighAverage{
+
+    border: 5px solid #21D07A;
+    border-left-color: gray;
+  }
+  .lowAverage{
+    border: 5px solid #C8CB2E;
+    border-left-color:gray;
+  }
+  .link{
+    position: absolute;
+    top: 9px;
+    right: 15px;
+    z-index: 30;
+    width: 30px;
+    height: 30px;
+  }
