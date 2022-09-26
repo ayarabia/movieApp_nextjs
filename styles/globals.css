@@ -17,4 +17,13 @@ a {
 .shadow{
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
+.gray{
+  color: #afa8a8;
+}
+.common_background{
+  height: 100%;
+background-repeat: no-repeat;
+background-size:cover;
+background-position: center ;
 
+}

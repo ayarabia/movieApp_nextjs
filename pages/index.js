@@ -65,7 +65,7 @@ export default function Home({ data }) {
                     <h4 className="px-3 pt-3 " style={{ height: "90px" }}>
                       {item.title}
                     </h4>
-                    <p className="px-3 text-gray-500">{item.release_date}</p>
+                    <p className="px-3 gray">{item.release_date}</p>
                   </div>
                 </div>
               );

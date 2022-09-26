@@ -21,7 +21,8 @@ export default function Details({ data }) {
   console.log(data);
   const [favourt,setFavourt]=useState("#ffffff")
   const handelFavourtColor=()=>{
-if(favourt==="white"){
+if(favourt==="#ffffff"){
+  console.log(favourt);
   setFavourt("red")
 }else{
   setFavourt("#ffffff")
@@ -45,8 +46,9 @@ if(favourt==="white"){
   };
 
   return (
-    <div className="container ">
-      <div className="row vh-100 my-5">
+<div >
+<div className="container ">
+      <div className="row vh-100 py-5">
         <div className="col-md-3 col-sm-12 pt-5">
           <Image
             loader={myLoader}
@@ -57,8 +59,8 @@ if(favourt==="white"){
           />
         </div>
         <div className="col-md-9 col-sm-12 p-5">
-          <h1>{data.original_title} ( 2022)</h1>
-          <p>
+          <h1 className="fw-bold">{data.original_title} ( 2022)</h1>
+          <p className="fs-5 mb-4">
             {data.release_date} . {data.genres[0].name} .
             {movieRunTime(data.runtime)}
           </p>
@@ -66,7 +68,7 @@ if(favourt==="white"){
             <div
               className={`${styles.average} ${radius(
                 data.vote_average * 10
-              )}  me-5 rounded-circle bg-dark  d-flex justify-content-center align-items-center text-light fw-bold`}
+              )}  me-2 rounded-circle bg-dark  d-flex justify-content-center align-items-center text-light fw-bold`}
             >
               <p className={`${styles.notRotate} px-5`}>
                 {data.vote_average * 10}
@@ -78,7 +80,7 @@ if(favourt==="white"){
             <div
               className={`d-flex  align-items-center mx-5 rounded-circle justify-content-center p-4 ${styles.favourt}`}
               style={{ background: "#032541" }}
-
+              
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -86,8 +88,11 @@ if(favourt==="white"){
                 height="16"
                 fill="currentColor"
                 className="  bi bi-heart-fill"
-                style={{color:{favourt}}}
+                style={{color:favourt}}
                 viewBox="0 0 16 16"
+                onClick={()=>{
+                  handelFavourtColor()
+                }}
               >
                 <path
                   fill-rule="evenodd"
@@ -99,23 +104,24 @@ if(favourt==="white"){
               <a href={data.homepage}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
+                  width="25"
+                  height="25"
                   fill="currentColor"
                   class="bi bi-play-fill"
                   viewBox="0 0 16 16"
                 >
                   <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" />
                 </svg>
-                <p>Homepage</p>
+                <p className="d-inline px-2">Homepage</p>
               </a>
             </div>
           </div>
-          <p className="text-gray">{data.tagline}</p>
+          <p className=" fs-5 gray">{data.tagline}</p>
           <h4>Overview</h4>
-          <p>{data.overview}</p>
+          <p className="gray fs-5 lh-lg">{data.overview}</p>
         </div>
       </div>
     </div>
+</div>
   );
 }
